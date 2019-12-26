@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 import java.io.*;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -125,7 +126,7 @@ public class PasswordServiceImpl extends ServiceImpl<PasswordMapper, Password> i
 
     public List<String> getEmailAddress() {
         try{
-            return readtFile(new File("./emailAddress.txt"));
+            return readtFile("./emailAddress.txt");
         }catch (IOException | ParseException ex){
             log.error("读取文件失败", ex);
             throw new AppRuntimeException(400, "读取文件失败");
@@ -134,28 +135,57 @@ public class PasswordServiceImpl extends ServiceImpl<PasswordMapper, Password> i
 
     }
     /** 读取数据，存入集合中 */
-    public static List<String> readtFile(File file) throws IOException, ParseException {
+    public static List<String> readtFile(String path) throws IOException, ParseException {
+        File file = new File(path);
         InputStreamReader read = null;// 考虑到编码格式
+        List<String> content = new ArrayList<>();
         try {
-            read = new InputStreamReader(new FileInputStream(file), "utf-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
+            if (file.isDirectory()){
+                String[] fileList = file.list();
+                for (int i = 0; i< fileList.length; i++) {
+                    File readfile = new File(path + "\\" + fileList[i]);
+                    if (!readfile.isDirectory()) {
+                        read = new InputStreamReader(new FileInputStream(readfile), "utf-8");
+                        content.addAll(getLine(read));
+                    }
+                }
+            }else {
+                read = new InputStreamReader(new FileInputStream(file), "utf-8");
+                content.addAll(getLine(read));
+
+            }
+
+        } catch (UnsupportedEncodingException | FileNotFoundException e) {
             e.printStackTrace();
         }
+
+        if (read != null){
+            read.close();
+        }
+        return content;
+    }
+    private static List<String> getLine(InputStreamReader read) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(read);
         String lineTxt = null;
         List<String> content = new ArrayList<>();
-
         while ((lineTxt = bufferedReader.readLine()) != null) {
             System.out.println(lineTxt);
-            lineTxt = lineTxt.trim().toLowerCase();
-            if (lineTxt.substring(lineTxt.length()-6).equals("qq.com")){
-                content.add(lineTxt);
+            lineTxt = lineTxt.trim();
+            content.add(lineTxt) ;
+        }
+        return content;
+    }
+
+    @Override
+    public void generateFile() {
+        try {
+            Collection<String> strings = readtFile("./docs");
+            for (String laws : strings) {
+                insert(laws);
             }
+        }catch (IOException | ParseException exception){
 
         }
-        read.close();
-        return content;
+
     }
 }

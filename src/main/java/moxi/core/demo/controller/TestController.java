@@ -31,5 +31,11 @@ public class TestController {
         password.generateStr();
     }
 
+    @GetMapping("/generateFile")
+    @ResponseBody
+    public void file(){
+        password.generateFile();
+    }
+
 
 }
