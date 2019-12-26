@@ -29,5 +29,6 @@
 
 
 ### 资助方式
-    支付宝：
+    1. 有帮助请star
+    2. 支付宝打开链接有图片 http://www.ichasem.tech/?page_id=96
         
