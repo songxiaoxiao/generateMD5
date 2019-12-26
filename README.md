@@ -29,12 +29,6 @@
 
 
 ### 资助方式
-<<<<<<< HEAD
     1. 有帮助请star
     2. 支付宝打开链接有图片 http://www.ichasem.tech/?page_id=96
-        
-=======
-    支付宝：
-    ![image](http://www.ichasem.tech/wp-content/uploads/2019/12/WechatIMG305.jpeg)
-        
->>>>>>> 6759547b92a4c73bd860ecf87ad294f1a6d272aa
+
