@@ -1,0 +1,120 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.6.RELEASE'
+    }
+    repositories {
+//		mavenCentral()
+
+        mavenLocal()
+        maven {
+            url 'http://129.211.39.250:8091/repository/maven-public'
+            credentials {
+                username = "develop"
+                password = "mox!2d8d"
+            }
+        }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'moxi.core'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+//snapshots
+def envRepos = System.getProperty("env") ?: "snapshots"
+def artifactId = 'demo'
+description = 'demo'
+
+install {
+    repositories.mavenInstaller {
+        pom.version = "$project.version"
+        pom.artifactId = "$artifactId"
+        pom.groupId = "$project.group"
+    }
+}
+
+repositories {
+    mavenCentral()
+
+    mavenLocal()
+    maven {
+        url 'http://localhost:8081/repository/maven-public/'
+        credentials {
+            username = "winter"
+            password = "123456"
+        }
+    }
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+//	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    compile('mysql:mysql-connector-java:8.0.11')
+    compile('com.alibaba:druid-spring-boot-starter:1.1.10')
+    compile('ch.qos.logback:logback-classic:1.2.3')
+    compile('org.slf4j:slf4j-api:1.7.25')
+    compile('org.slf4j:slf4j-log4j12:1.7.25')
+    compile("org.springframework.boot:spring-boot-starter-web:2.0.6.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-jdbc:2.0.6.RELEASE")
+    compile('com.baomidou:mybatis-plus:2.3')
+    compile('com.baomidou:mybatisplus-spring-boot-starter:1.0.5')
+    compile('com.alibaba:fastjson:1.2.47')
+    compile('com.github.kevinsawicki:http-request:6.0')
+    compile('com.aliyun:aliyun-java-sdk-core:3.2.3')
+    compile('com.aliyun:aliyun-java-sdk-dysmsapi:1.0.0')
+
+    //swagger
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.6.0'
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.6.0'
+    //compile('io.swagger:swagger-annotations:1.5.13')
+
+    //常用工具
+    compile group: 'com.google.guava', name: 'guava', version: '23.0'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
+    compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
+    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
+    compile group: 'commons-io', name: 'commons-io', version: '2.6'
+    compile group: 'org.codehaus.groovy', name: 'groovy', version: '2.5.8'
+
+    //
+    compile group: 'org.apache.maven.plugins', name: 'maven-compiler-plugin', version: '3.7.0'
+
+    //http
+    compile('org.apache.httpcomponents:httpcore:4.4.10')
+    compile('org.apache.httpcomponents:httpclient:4.5.3')
+    compile('org.apache.httpcomponents:httpmime:4.5.3')
+
+    //compile('org.projectlombok:lombok:1.18.8')
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
+    compileOnly 'org.projectlombok:lombok:1.18.8'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.8'
+    testCompileOnly 'org.projectlombok:lombok:1.18.8'
+
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
+
+    // This dependency is found on compile classpath of this component and consumers.
+//	testCompile("org.springframework.boot:spring-boot-starter-test:2.0.6.RELEASE")
+    // Use JUnit test framework
+    testCompile 'junit:junit:4.12'
+
+
+    compile("org.springframework.boot:spring-boot-starter-freemarker:2.0.6.RELEASE")
+
+    compile('io.github.isliqian:NiceEmail:3.0.0')
+    compile('com.aliyun:aliyun-java-sdk-core:3.0.0')
+    compile('com.aliyun:aliyun-java-sdk-dm:3.1.0')
+
+}
