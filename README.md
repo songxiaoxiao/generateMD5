@@ -30,4 +30,5 @@
 
 ### 资助方式
     支付宝：
+    ![image](http://www.ichasem.tech/wp-content/uploads/2019/12/WechatIMG305.jpeg)
         
