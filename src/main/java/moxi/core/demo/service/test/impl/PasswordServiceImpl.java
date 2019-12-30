@@ -87,8 +87,11 @@ public class PasswordServiceImpl extends ServiceImpl<PasswordMapper, Password> i
         log.info("===begin===");
 
 //        generateNumber();
-        for (int i = 1; i <= 5; i++) {
-            generateEnRecursive("", i, 1);
+        for (int i = 1; i <= 10; i++) {
+            final int temp = i;
+            threadPoolTaskExecutor.execute(()-> {
+                generateEnRecursive("", temp, 1);
+            });
         }
         log.info("===end===");
     }
@@ -96,7 +99,7 @@ public class PasswordServiceImpl extends ServiceImpl<PasswordMapper, Password> i
      * digui 字母组装
      * */
     private void generateEnRecursive(String laws, int times, int beginTime){
-        for (int i = 0; i <= 61; i++) {
+        for (int i = 0; i <= 71; i++) {
             String tempLaws = laws.concat(key[i]);
             if (times > beginTime){
                 generateEnRecursive(laws.concat(key[i]), times, beginTime+1);
@@ -143,7 +146,7 @@ public class PasswordServiceImpl extends ServiceImpl<PasswordMapper, Password> i
             if (file.isDirectory()){
                 String[] fileList = file.list();
                 for (int i = 0; i< fileList.length; i++) {
-                    File readfile = new File(path + "\\" + fileList[i]);
+                    File readfile = new File(path + "/" + fileList[i]);
                     if (!readfile.isDirectory()) {
                         read = new InputStreamReader(new FileInputStream(readfile), "utf-8");
                         content.addAll(getLine(read));
@@ -184,7 +187,7 @@ public class PasswordServiceImpl extends ServiceImpl<PasswordMapper, Password> i
                 insert(laws);
             }
         }catch (IOException | ParseException exception){
-
+            log.error(exception.getMessage(), exception);
         }
 
     }
