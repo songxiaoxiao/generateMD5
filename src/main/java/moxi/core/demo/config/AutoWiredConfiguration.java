@@ -13,7 +13,7 @@ public class AutoWiredConfiguration {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(10);
         executor.setKeepAliveSeconds(300);
-        executor.setMaxPoolSize(20);
+        executor.setMaxPoolSize(30);
         executor.setQueueCapacity(10000);
         return executor;
     }
