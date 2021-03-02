@@ -30,7 +30,4 @@
 
 
 
-### 资助方式
-    1. 有帮助请star
-    2. 支付宝打开链接有支付二维码 http://www.ichasem.tech/?page_id=96
 
